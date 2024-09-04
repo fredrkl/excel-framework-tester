@@ -1,9 +1,12 @@
-﻿using System;
-using ClosedXML.Excel;
+﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 
+if(false){
 // Step 1: Create a new workbook
-using (var workbook = new XLWorkbook())
-{
+  using (var workbook = new XLWorkbook())
+  {
     // Step 2: Add a worksheet to the workbook
     var worksheet = workbook.AddWorksheet("Sheet1");
 
@@ -29,6 +32,23 @@ using (var workbook = new XLWorkbook())
 
     // Step 4: Save the workbook to a file
     workbook.SaveAs("output.xlsx");
+  }
+
+  Console.WriteLine("Excel file created successfully!");
 }
 
-Console.WriteLine("Excel file created successfully!");
+Console.WriteLine("Hello world");
+
+if(false){
+  using(SpreadsheetDocument document = SpreadsheetDocument.Create("output-plain.xlsx", SpreadsheetDocumentType.Workbook))
+  {
+    // Step 2: Add a WorkbookPart to the document
+    WorkbookPart workbookPart = document.AddWorkbookPart();
+    workbookPart.Workbook = new Workbook();
+
+    // Step 3: Add a WorksheetPart to the WorkbookPart
+    WorksheetPart worksheetPart = workbookPart.AddNewPart<WorksheetPart>();
+    worksheetPart.Worksheet = new Worksheet(new SheetData());
+
+  }
+}
