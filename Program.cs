@@ -1,4 +1,4 @@
-﻿using ClosedXML.Excel;
+using ClosedXML.Excel;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
@@ -39,7 +39,7 @@ if(false){
 
 Console.WriteLine("Hello world");
 
-if(false){
+if(true){
   using(SpreadsheetDocument document = SpreadsheetDocument.Create("output-plain.xlsx", SpreadsheetDocumentType.Workbook))
   {
     // Step 2: Add a WorkbookPart to the document
@@ -49,6 +49,21 @@ if(false){
     // Step 3: Add a WorksheetPart to the WorkbookPart
     WorksheetPart worksheetPart = workbookPart.AddNewPart<WorksheetPart>();
     worksheetPart.Worksheet = new Worksheet(new SheetData());
+
+    // Step 4: Add Sheets to the Workbook
+    Sheets sheets = document.WorkbookPart.Workbook.AppendChild(new Sheets());
+
+    // Step 5: Append a new worksheet and associate it with the workbook
+    Sheet sheet = new Sheet()
+    {
+      Id = document.WorkbookPart.GetIdOfPart(worksheetPart),
+         SheetId = 1,
+         Name = "Sheet1"
+    };
+    sheets.Append(sheet);
+            
+    // Save the workbook
+    workbookPart.Workbook.Save();
 
   }
 }
